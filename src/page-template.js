@@ -1,4 +1,4 @@
-src/page-template-js
+//src/page-template-js
 
 // create the team
 const generateTeam = team => {

@@ -169,10 +169,107 @@ function appMenu() {
       createTeam();
     });
   }
+  function createTeam() {
+    inquirer
+    .prompt ([
+      {
+        type: 'list',
+        name: 'memberChoice',
+        message: 'Which type of team member would you like to add?',
+        choices: ['manager', 'intern','I do not want to add any more team members']
+      }
+    ])
+    .then(userChoice => {
+      if (userChoice.memberChoice === 'manager') {
+        addManager();}
+        else if (userChoice.memberChoice === 'Intern') {
+          addIntern();
+        } else {
+          buildTeam();
+        }})
 
   function addIntern() {
-    //code goes here
+    inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'InternName',
+        message: "What is the team Intern's name?",
+        validate: (answer) => {
+          if (answer !== '') {
+            return true;
+          }
+          return 'Please enter at least one character.';
+        },
+      },
+      {
+        type: 'input',
+        name: 'InternId',
+        message: "What is the team Intern's id?",
+        validate: (answer) => {
+          const pass = answer.match(/^[1-9]\d*$/);
+          if (pass) {
+            return true;
+          }
+          return 'Please enter a positive number greater than zero.';
+        },
+      },
+      {
+        type: 'input',
+        name: 'InternEmail',
+        message: "What is the team Intern's email?",
+        validate: (answer) => {
+          const pass = answer.match(/\S+@\S+\.\S+/);
+          if (pass) {
+            return true;
+          }
+          return 'Please enter a valid email address.';
+        },
+      },
+      {
+        type: 'input',
+        name: 'InternSchool',
+        message: "What is the team Intern's school?",
+        validate: (answer) => {
+          const pass = answer.match(/\S+@\S+\.\S+/);
+          if (pass) {
+            return true;
+          }
+          return 'Please enter a valid gitHub account.';
+        },
+      },
+    ])
+    .then((answers) => {
+      const Intern = new Intern(
+        answers.InternName,
+        answers.InternId,
+        answers.InternEmail,
+        answers.InternSchool,
+      );
+      teamMembers.push(Intern);
+      idArray.push(answers.InternId);
+      createTeam();
+    });
   }
+  function createTeam() {
+    inquirer
+    .prompt ([
+      {
+        type: 'list',
+        name: 'memberChoice',
+        message: 'Which type of team member would you like to add?',
+        choices: ['engineer', 'manager','I do not want to add any more team members']
+      }
+    ])
+    .then(userChoice => {
+      if (userChoice.memberChoice === 'engineer') {
+        addEngineer();}
+        else if (userChoice.memberChoice === 'manager') {
+          addManager();
+        } else {
+          buildTeam();
+        }})
+      }        
 
   function buildTeam() {
     // Create the output directory if the dist path doesn't exist
@@ -185,4 +282,5 @@ function appMenu() {
   createManager();
 }
 
-appMenu();
+appMenu()
+  }
