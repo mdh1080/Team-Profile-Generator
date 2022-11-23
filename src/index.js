@@ -1,7 +1,7 @@
-index.js
+
 
 const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
+const Engineer = require('./lib/engineer');
 const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 const path = require('path');
@@ -62,7 +62,7 @@ function appMenu() {
         },
         {
           type: 'input',
-          name: 'managerOfficeNumber',
+          name: 'managerOffice',
           message: "What is the team manager's office number?",
           validate: (answer) => {
             const pass = answer.match(/^[1-9]\d*$/);
@@ -74,11 +74,11 @@ function appMenu() {
         },
       ])
       .then((answers) => {
-        const manager = new Manager(
+        const manager = new manager(
           answers.managerName,
           answers.managerId,
           answers.managerEmail,
-          answers.managerOfficeNumber
+          answers.managerOffice
         );
         teamMembers.push(manager);
         idArray.push(answers.managerId);
