@@ -148,8 +148,7 @@ function addManager() {
         name: 'gitHubaccount',
         message: "What is the team engineer's gitHub account?",
         validate: (answer) => {
-          const pass = answer.match(/\S+@\S+\.\S+/);
-          if (pass) {
+          if (answer !== '') {
             return true;
           }
           return 'Please enter a valid gitHub account.';
@@ -157,7 +156,7 @@ function addManager() {
       },
     ])
     .then((answers) => {
-      const engineer = new engineer(
+      const engineer = new Engineer(
         answers.engineerName,
         answers.engineerId,
         answers.engineerEmail,
@@ -231,11 +230,10 @@ function addManager() {
         name: 'InternSchool',
         message: "What is the team Intern's school?",
         validate: (answer) => {
-          const pass = answer.match(/\S+@\S+\.\S+/);
-          if (pass) {
+          if (answer !== '') {
             return true;
           }
-          return 'Please enter a valid gitHub account.';
+          return 'Please enter a valid school name.';
         },
       },
     ])
@@ -279,7 +277,7 @@ function addManager() {
     fs.writeFileSync(distPath, render(teamMembers), 'utf-8');
     }
   
-  addManager()
+  // addManager()
   // addIntern();
   // addEngineer();
 
