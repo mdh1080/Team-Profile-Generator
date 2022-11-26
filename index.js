@@ -1,7 +1,7 @@
 
 
 const Manager = require('./lib/Manager');
-const engineer = require('./lib/engineer');
+const Engineer = require('./lib/engineer');
 const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 const path = require('path');
@@ -15,7 +15,7 @@ const render = require('./src/page-template.js');
 const teamMembers = [];
 const idArray = [];
 
-// Inform user of usage
+
 console.log(
   '\nWelcome to the team generator!\nUse `npm run reset` to reset the dist/ folder\n'
 );
@@ -85,26 +85,6 @@ function addManager() {
       });
   }
 
-  function createTeam() {
-    inquirer
-    .prompt ([
-      {
-        type: 'list',
-        name: 'memberChoice',
-        message: 'Which type of team member would you like to add?',
-        choices: ['engineer', 'intern', 'I do not want to add any more team members']
-      }
-    ])
-    .then(userChoice => {
-      if (userChoice.memberChoice === 'engineer') {
-          addEngineer();
-        } else if (userChoice.memberChoice === 'intern') {
-          addIntern();
-        } else {
-          buildTeam();
-        }})
-  }
-
   function addEngineer() {
     inquirer
     .prompt([
@@ -167,26 +147,7 @@ function addManager() {
       createTeam();
     });
   }
-  function createTeam() {
-    inquirer
-    .prompt ([
-      {
-        type: 'list',
-        name: 'memberChoice',
-        message: 'Which type of team member would you like to add?',
-        choices: ['manager', 'intern','I do not want to add any more team members']
-      }
-    ])
-    .then(userChoice => {
-      if (userChoice.memberChoice === 'manager') {
-        addManager();}
-        else if (userChoice.memberChoice === 'Intern') {
-          addIntern();
-        } else {
-          buildTeam();
-        }})
-  }
-
+ 
   function addIntern() {
     inquirer
     .prompt([
@@ -238,7 +199,7 @@ function addManager() {
       },
     ])
     .then((answers) => {
-      const Intern = new Intern(
+      const intern = new Intern(
         answers.InternName,
         answers.InternId,
         answers.InternEmail,
@@ -256,7 +217,7 @@ function addManager() {
         type: 'list',
         name: 'memberChoice',
         message: 'Which type of team member would you like to add?',
-        choices: ['engineer', 'manager','I do not want to add any more team members']
+        choices: ['engineer', 'manager', 'Intern', 'I do not want to add any more team members']
       }
     ])
     .then(userChoice => {
@@ -264,6 +225,8 @@ function addManager() {
         addEngineer();}
         else if (userChoice.memberChoice === 'manager') {
           addManager();
+        } else if (userChoice.memberChoice === 'Intern') {
+          addIntern();
         } else {
           buildTeam();
         }})
@@ -277,9 +240,6 @@ function addManager() {
     fs.writeFileSync(distPath, render(teamMembers), 'utf-8');
     }
   
-  // addManager()
-  // addIntern();
-  // addEngineer();
 
 function appMenu() {
   addManager()
