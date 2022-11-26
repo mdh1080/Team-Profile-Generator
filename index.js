@@ -1,7 +1,7 @@
 
 
 const Manager = require('./lib/Manager');
-const Engineer = require('./lib/engineer');
+const engineer = require('./lib/engineer');
 const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 const path = require('path');
@@ -20,23 +20,22 @@ console.log(
   '\nWelcome to the team generator!\nUse `npm run reset` to reset the dist/ folder\n'
 );
 
-function appMenu() {
-  function createManager() {
-    console.log('Please build your team 👥');
-    inquirer
-      .prompt([
-        {
-          type: 'input',
-          name: 'managerName',
-          message: "What is the team manager's name?",
-          validate: (answer) => {
-            if (answer !== '') {
-              return true;
-            }
+function addManager() {
+  console.log('Please build your team 👥');
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'managerName',
+        message: "What is the team manager's name?",
+        validate: (answer) => {
+          if (answer !== '') {
+            return true;
+          }
             return 'Please enter at least one character.';
           },
-        },
-        {
+       },
+       {
           type: 'input',
           name: 'managerId',
           message: "What is the team manager's id?",
@@ -74,7 +73,7 @@ function appMenu() {
         },
       ])
       .then((answers) => {
-        const manager = new manager(
+         let manager = new Manager(
           answers.managerName,
           answers.managerId,
           answers.managerEmail,
@@ -93,13 +92,13 @@ function appMenu() {
         type: 'list',
         name: 'memberChoice',
         message: 'Which type of team member would you like to add?',
-        choices: ['engineer', 'intern','I do not want to add any more team members']
+        choices: ['engineer', 'intern', 'I do not want to add any more team members']
       }
     ])
     .then(userChoice => {
       if (userChoice.memberChoice === 'engineer') {
-        addEngineer();}
-        else if (userChoice.memberChoice === 'intern') {
+          addEngineer();
+        } else if (userChoice.memberChoice === 'intern') {
           addIntern();
         } else {
           buildTeam();
@@ -158,7 +157,7 @@ function appMenu() {
       },
     ])
     .then((answers) => {
-      const engineer = new Engineer(
+      const engineer = new engineer(
         answers.engineerName,
         answers.engineerId,
         answers.engineerEmail,
@@ -187,6 +186,7 @@ function appMenu() {
         } else {
           buildTeam();
         }})
+  }
 
   function addIntern() {
     inquirer
@@ -277,10 +277,13 @@ function appMenu() {
       fs.mkdirSync(DIST_DIR);
     }
     fs.writeFileSync(distPath, render(teamMembers), 'utf-8');
-  }
+    }
+  
+  addManager()
+  // addIntern();
+  // addEngineer();
 
-  createManager();
+function appMenu() {
+  addManager()
 }
-
 appMenu()
-  }

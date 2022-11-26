@@ -11,6 +11,6 @@
                 "<node_internals>/**"
             ],
             "console": "integratedTerminal", // <= the relevant part
-            "program": "${workspaceFolder}/src/index.js"
+            "program": "${workspaceFolder}\\index.js"
         }
     ]}
